@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Selenium
+chromedriver.exe
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Editor
+.vscode/

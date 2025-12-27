@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>LifeLabel Ultimate</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        padding: 10px;
+        width: 350px;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 6px;
+        padding: 6px;
+        background: #2c7be5;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .badge {
+        text-align: center;
+        padding: 8px;
+        margin: 8px 0;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+
+      .buy {
+        background: #d4f8d4;
+      }
+      .caution {
+        background: #fff3cd;
+      }
+      .avoid {
+        background: #f8d7da;
+      }
+      .neutral {
+        background: #e2e3e5;
+      }
+
+      .product-box {
+        background: #f3f3f3;
+        padding: 8px;
+        border-radius: 8px;
+        margin-top: 8px;
+        font-size: 13px;
+      }
+
+      .score-bar-container {
+        background: #ddd;
+        height: 18px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .score-bar {
+        height: 100%;
+        font-size: 11px;
+        font-weight: bold;
+        color: white;
+        text-align: right;
+        padding-right: 5px;
+      }
+
+      .green {
+        background: #2ecc71;
+      }
+      .red {
+        background: #e74c3c;
+      }
+      .blue {
+        background: #3498db;
+      }
+
+      .advice {
+        margin-top: 10px;
+        padding: 8px;
+        background: #eef6ff;
+        border-radius: 8px;
+      }
+
+      .signals {
+        margin-top: 10px;
+        padding: 8px;
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+      }
+
+      .signals b {
+        display: block;
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>LifeLabel Ultimate</h2>
+
+    <div id="decisionBadge" class="badge neutral">Waiting for analysis</div>
+
+    <button id="analyzeBtn">Analyze Product</button>
+
+    <div class="product-box" id="productBox" style="display: none">
+      <b id="productTitle"></b><br />
+      💰 Price: <span id="productPrice"></span><br />
+      ⭐ Rating: <span id="productRating"></span><br />
+      <span id="priceAlert"></span>
+    </div>
+
+    <b>🛠 Build Quality</b>
+    <div class="score-bar-container">
+      <div id="durabilityBar" class="score-bar green"></div>
+    </div>
+
+    <b>🔁 Return Complaints</b>
+    <div class="score-bar-container">
+      <div id="returnBar" class="score-bar red"></div>
+    </div>
+
+    <b>😊 Customer Mood</b>
+    <div class="score-bar-container">
+      <div id="sentimentBar" class="score-bar blue"></div>
+    </div>
+
+    <div class="advice" id="advice">Advice will appear here.</div>
+
+    <!-- 🔥 NEW SECTION -->
+    <div id="signalsBox" class="signals" style="display: none"></div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
