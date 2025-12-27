@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "LifeLabel Ultimate",
+  "name": "TrustLabel",
   "version": "1.1",
   "action": {
     "default_popup": "popup.html"
