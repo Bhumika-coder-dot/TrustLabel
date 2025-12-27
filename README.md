@@ -32,25 +32,17 @@ TrustLabel transforms unstructured review text into actionable insights.
 
 ## 📸 Screenshots
 
-### ⚠️ CAUTION – Mixed Signals  
-Moderate durability concerns and some return-related complaints.  
-<p align="center">
-  <img src="results/o1.png" alt="Caution Screenshot" width="400"/>
-</p>
-
-### ✅ BUY – Safe Choice  
+**✅ BUY – Safe Choice**  
 Mostly positive reviews with low risk indicators.  
-<p align="center">
-  <img src="results/o2.png" alt="Buy Screenshot" width="400"/>
-</p>
+![Buy Screenshot](results/o1.png)
 
-### ❌ AVOID – High Risk  
+**⚠️ CAUTION – Mixed Signals**  
+Moderate durability concerns and some return-related complaints.  
+![Caution Screenshot](results/o5.png)
+
+**❌ AVOID – High Risk**  
 Negative sentiment with frequent complaints and high return risk.  
-<p align="center">
-  <img src="results/o3.png" alt="Avoid Screenshot" width="400"/>
-</p>
-
-> Make sure the `results/` folder with images is **inside your repository and committed to Git**.
+![Avoid Screenshot](results/o2.png)
 
 ---
 
@@ -96,3 +88,4 @@ Built strictly for learning and academic demonstration.
 cd backend
 pip install -r requirements.txt
 python -m uvicorn main:app --reload
+```
