@@ -1,6 +1,6 @@
-# LifeLabel – Amazon Review Analysis Tool
+# TrustLabel – Amazon Review Analysis Tool
 
-LifeLabel is a student project that analyzes Amazon product reviews to help users decide whether to Buy, Caution, or Avoid a product.
+TrustLabel is a student project that analyzes Amazon product reviews to help users decide whether to Buy, Caution, or Avoid a product.
 
 ## Features
 
