@@ -32,19 +32,25 @@ TrustLabel transforms unstructured review text into actionable insights.
 
 ## 📸 Screenshots
 
-**⚠️ CAUTION – Mixed Signals**  
+### ⚠️ CAUTION – Mixed Signals  
 Moderate durability concerns and some return-related complaints.  
-![Caution Screenshot](results/o1.png)
+<p align="center">
+  <img src="results/o1.png" alt="Caution Screenshot" width="400"/>
+</p>
 
-**✅ BUY – Safe Choice**  
+### ✅ BUY – Safe Choice  
 Mostly positive reviews with low risk indicators.  
-![Buy Screenshot](results/o2.png)
+<p align="center">
+  <img src="results/o2.png" alt="Buy Screenshot" width="400"/>
+</p>
 
-**❌ AVOID – High Risk**  
+### ❌ AVOID – High Risk  
 Negative sentiment with frequent complaints and high return risk.  
-![Avoid Screenshot](results/o3.png)
+<p align="center">
+  <img src="results/o3.png" alt="Avoid Screenshot" width="400"/>
+</p>
 
-> Make sure `results/` folder with the images is committed to your repo.
+> Make sure the `results/` folder with images is **inside your repository and committed to Git**.
 
 ---
 
