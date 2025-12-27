@@ -1,33 +1,92 @@
-# TrustLabel – Amazon Review Analysis Tool
+# TrustLabel — Know Before You Buy
 
-TrustLabel is a student project that analyzes Amazon product reviews to help users decide whether to Buy, Caution, or Avoid a product.
+TrustLabel is a personal full-stack project that helps users make informed Amazon purchase decisions by analyzing real customer reviews using Natural Language Processing (NLP).
 
-## Features
+It works as a Chrome Extension that evaluates product reviews and displays a clear decision: **BUY, CAUTION, or AVOID** — along with explainable insights.
 
-- Sentiment analysis of reviews
-- Durability & return risk detection
-- Decision advice (BUY / CAUTION / AVOID)
-- Chrome extension frontend
-- Selenium-based scraping (local only)
+---
 
-## Important Note
+## 🔍 What Problem It Solves
 
-Amazon blocks scraping on cloud servers.
-This project is intended to run locally using Selenium.
+Online shopping reviews are:
 
-## Tech Stack
+- Time-consuming to read
+- Often biased or misleading
+- Difficult to convert into a clear decision
 
-- FastAPI (Backend)
-- Selenium (Scraping)
-- NLTK (Sentiment)
-- Chrome Extension (Frontend)
+TrustLabel transforms unstructured review text into actionable insights.
 
-## How to Run (Local)
+---
 
-Backend:
+## 🚀 Key Features
+
+- 🧠 NLP-based Sentiment Analysis (Positive / Neutral / Negative)
+- 🛠 Build Quality & Durability Detection
+- 🔁 Return & Complaint Risk Analysis
+- 📊 Decision Badge: BUY / CAUTION / AVOID
+- 🧾 Explainable Review Signals
+- 🧩 Chrome Extension Interface
+- 🕷 Live Amazon Review Scraping (Local Selenium)
+
+---
+
+## 📸 Screenshots
+
+**⚠️ CAUTION – Mixed Signals**  
+Moderate durability concerns and some return-related complaints.  
+![Caution Screenshot](results\o1.png)
+
+**✅ BUY – Safe Choice**  
+Mostly positive reviews with low risk indicators.  
+![Buy Screenshot](results\o1.png)
+
+**❌ AVOID – High Risk**  
+Negative sentiment with frequent complaints and high return risk.  
+![Avoid Screenshot](results\o1.png)
+
+> Replace `link-to-your-...` with your actual image paths or GitHub links.
+
+---
+
+## 🛠 Tech Stack
+
+**Backend**
+
+- FastAPI (Python)
+- Selenium + ChromeDriver
+- NLP (Natural Language Processing)
+- NLTK (VADER Sentiment Analysis)
+- Keyword-based review signal detection
+
+**Frontend**
+
+- Chrome Extension
+- HTML, CSS, JavaScript
+
+**Tools**
+
+- Git & GitHub
+- Uvicorn
+- VS Code
+
+---
+
+## ⚠️ Important Note
+
+Amazon actively blocks scraping from cloud servers.
+
+- ✔ Live scraping works only in local environments using Selenium
+- ❌ This project is not intended for production-scale scraping
+
+Built strictly for learning and academic demonstration.
+
+---
+
+## ▶️ How to Run (Local Setup)
+
+### 1️⃣ Backend
 
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn main:app --reload
-```
+python -m uvicorn main:app --reload
