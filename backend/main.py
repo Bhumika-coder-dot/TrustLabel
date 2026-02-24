@@ -2,11 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
-import os
 import re
 
 from lifelabel import analyze_reviews, get_price_alert
@@ -34,11 +32,12 @@ def analyze_url(data: URLInput):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--window-size=1920,1080")
 
-    driver_path = os.path.join(os.path.dirname(__file__), "chromedriver.exe")
-    service = Service(driver_path)
+    driver = None
 
     try:
-        driver = webdriver.Chrome(service=service, options=chrome_options)
+        # ✅ Selenium auto-manages correct ChromeDriver
+        driver = webdriver.Chrome(options=chrome_options)
+
         driver.get(data.url)
         time.sleep(5)
 
@@ -51,24 +50,33 @@ def analyze_url(data: URLInput):
 
         # ---------- PRODUCT DETAILS ----------
         product_title = safe_text(By.ID, "productTitle")
-        product_price = safe_text(By.CLASS_NAME, "a-price-whole") or safe_text(By.CLASS_NAME, "a-offscreen")
+
+        product_price = (
+            safe_text(By.CLASS_NAME, "a-price-whole")
+            or safe_text(By.CLASS_NAME, "a-offscreen")
+        )
+
         product_rating = (
-           safe_text(By.XPATH, "//span[@data-hook='rating-out-of-text']")
-           or safe_text(By.CLASS_NAME, "a-icon-alt")
+            safe_text(By.XPATH, "//span[@data-hook='rating-out-of-text']")
+            or safe_text(By.CLASS_NAME, "a-icon-alt")
             or safe_text(By.XPATH, "//span[contains(text(),'out of 5')]")
         )
-        if product_rating:
-             m = re.search(r"(\d\.\d|\d)", product_rating)
-             product_rating = m.group(1) if m else product_rating
 
+        if product_rating:
+            m = re.search(r"(\d\.\d|\d)", product_rating)
+            product_rating = m.group(1) if m else product_rating
 
         # ---------- REVIEWS ----------
-        review_elements = driver.find_elements(By.XPATH, "//span[@data-hook='review-body']")
+        review_elements = driver.find_elements(
+            By.XPATH, "//span[@data-hook='review-body']"
+        )
         reviews = [r.text.strip() for r in review_elements if r.text.strip()]
         reviews = reviews[:30]
 
+        # Always close driver
         driver.quit()
 
+        # ---------- NO REVIEWS CASE ----------
         if not reviews:
             return {
                 "product_title": product_title,
@@ -78,42 +86,54 @@ def analyze_url(data: URLInput):
                 "return_risk": 0,
                 "average_sentiment": 0,
                 "advice": "No reviews found",
-                "explain": {}
+                "explain": {},
             }
 
         # ---------- ANALYSIS ----------
         result = analyze_reviews(reviews)
-        # ---------- ANALYSIS ----------
 
-
-# ---------- RATING INSIGHT (SAFE ADDITION) ----------
+        # ---------- RATING INSIGHT ----------
         try:
-          if product_rating:
-             rating_value = float(product_rating.split()[0])
-             if rating_value < 4.0:
-                 result["advice"] += " Average rating is below 4.0, indicating mixed customer experience."
+            if product_rating:
+                rating_value = float(product_rating)
+                if rating_value < 4.0:
+                    result["advice"] += (
+                        " Average rating is below 4.0, indicating mixed customer experience."
+                    )
         except:
-             pass
+            pass
 
-        price_alert = get_price_alert(product_title, int(product_price.replace(",", "")) if product_price else None)
+        # ---------- SAFE PRICE PARSE ----------
+        price_numeric = None
+        if product_price:
+            try:
+                cleaned_price = re.sub(r"[^\d]", "", product_price)
+                price_numeric = int(cleaned_price)
+            except:
+                price_numeric = None
+
+        price_alert = get_price_alert(product_title, price_numeric)
+
+        # ---------- FINAL RESPONSE ----------
         result.update({
             "product_title": product_title,
             "product_price": product_price,
             "product_rating": product_rating,
-            "price_alert": price_alert
+            "price_alert": price_alert,
+            "reviews": reviews[:10]   # evidence layer
         })
-
-        result.update({
-          "product_title": product_title,
-          "product_price": product_price,
-          "product_rating": product_rating,
-          "reviews": reviews[:10]   # 🔥 evidence layer
-         })
 
         return result
 
-
     except Exception as e:
+
+        # Ensure driver closes even on error
+        if driver:
+            try:
+                driver.quit()
+            except:
+                pass
+
         return {
             "error": str(e),
             "product_title": None,
@@ -123,5 +143,5 @@ def analyze_url(data: URLInput):
             "return_risk": 0,
             "average_sentiment": 0,
             "advice": "Backend failed",
-            "explain": {}
+            "explain": {},
         }
